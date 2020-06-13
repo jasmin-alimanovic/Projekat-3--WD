@@ -169,7 +169,6 @@ $(".btn-log").click(function () {
 const pokedex = $("#pokedex");
 const pokedexFavorite = $("#pokedex-favorite");
 let pokemons = [];
-let favorites = [];
 //get length
 let length = $(".pokemons50, .pokemons100, .pokemons150").click(
   $(this).data("value")
@@ -179,12 +178,6 @@ $(".pokemons50, .pokemons100, .pokemons150").click(function () {
   getPokemons();
 });
 //fetching pokemons
-
-for (let i = 0; i < length; i++) {
-  $(`.favorite1${i}`).click(function () {
-    console.log("success");
-  });
-}
 
 const getPokemons = () => {
   pokemons = [];
@@ -197,7 +190,56 @@ const getPokemons = () => {
     );
   }
 };
-// getPokemons();
+//save pokemons in local storage
+function savePokemon(pokemon) {
+  let id;
+  let name;
+  let image;
+  let type;
+  let items;
+  if (localStorage.getItem("id") === null) {
+    id = [];
+  } else {
+    id = JSON.parse(localStorage.getItem("id"));
+  }
+  //name
+  if (localStorage.getItem("name") === null) {
+    name = [];
+  } else {
+    name = JSON.parse(localStorage.getItem("name"));
+  }
+  //image
+  if (localStorage.getItem("image") === null) {
+    image = [];
+  } else {
+    image = JSON.parse(localStorage.getItem("image"));
+  }
+  //type
+  if (localStorage.getItem("type") === null) {
+    type = [];
+  } else {
+    type = JSON.parse(localStorage.getItem("type"));
+  }
+  //items
+  if (localStorage.getItem("items") === null) {
+    items = [];
+  } else {
+    items = JSON.parse(localStorage.getItem("items"));
+  }
+  id.push(pokemon.id);
+  localStorage.setItem("id", JSON.stringify(id));
+  name.push(pokemon.name);
+  localStorage.setItem("name", JSON.stringify(name));
+  image.push(pokemon.image);
+  localStorage.setItem("image", JSON.stringify(image));
+  type.push(pokemon.type);
+  localStorage.setItem("type", JSON.stringify(type));
+  items.push(pokemon.items);
+  localStorage.setItem("items", JSON.stringify(items));
+}
+//get pokemons from local storage
+function getpokemonFromLocal(pokemon) {}
+
 $(document).ready(function () {
   $(".pokemons50, .pokemons100, .pokemons150").click(function () {
     $(".view-poke").toggleClass("view-poke-slide");
@@ -209,8 +251,11 @@ $(document).ready(function () {
         type: res.types.map((type) => type.type.name).join(", "),
         items: res.held_items.map((item) => item.item.name).join(", "),
       }));
-      console.log("pokemon");
-      console.log(pokemon);
+      // console.log(pokemon);
+      localStorage.clear();
+      pokemon.forEach(function (pokeman) {
+        savePokemon(pokeman);
+      });
       displayPokemons(pokemon);
     });
   });
@@ -220,16 +265,10 @@ $(document).ready(function () {
 const displayPokemons = (pokemon) => {
   pokedex.html("");
 
-  const p = JSON.parse(localStorage.getItem("pokemons"));
-  console.log("p[0][0].id");
-  console.log(p[0][0].id);
-  for (let i = 0; i < pokemon.length; i++) {
-    for (let j = i; j < pokemon.length; j++) {
-      if (pokemon[i].id != p[j][0].id) {
-        const htmlCode = pokemon
-          .map(
-            (poke) =>
-              `
+  const htmlCode = pokemon
+    .map(
+      (poke) =>
+        `
           <li class ="card">
           <img src="${poke.image}">
           <div style="margin-left:20px">
@@ -243,41 +282,48 @@ const displayPokemons = (pokemon) => {
           </li>
           
           `
-          )
-          .join("");
-        pokedex.html(htmlCode);
-      } else {
-        const htmlCode = pokemon
-          .map(
-            (poke) => `
-          <li class ="card">
-          <img src="${poke.image}">
-          <div style="margin-left:20px">
-          <h2 class="card-title">Name: ${poke.name}</h2>
-          <h3>Id: ${poke.id}</h2>
-          <p class="card-desc">Type: ${poke.type}</p>
-          <p class="card-desc">Items: ${poke.items}</p>
-          <p class ="p${poke.id}"><i class="fas fa-check-square"></i> <a onClick="DisplayFavouritePokemons();" href="./favourites.html">Added to favourites</a></p>
-          </div>
-        
-          </li>
-          
-          `
-          )
-          .join("");
-        pokedex.html(htmlCode);
-      }
-    }
-  }
+    )
+    .join("");
+  pokedex.html(htmlCode);
 };
 
 //display favourite pokemons
 const DisplayFavouritePokemons = () => {
-  const pokemon = JSON.parse(localStorage.getItem("pokemons"));
-  let velicina = pokemon.length - 1;
-  console.log(pokemon);
+  let id;
+  let name;
+  let image;
+  let type;
+  let items;
+  let velicina;
+  if (localStorage.getItem("id") == null) {
+    id = [];
+    name = [];
+    image = [];
+    type = [];
+    items = [];
+    velicina = 0;
+  } else {
+    id = JSON.parse(localStorage.getItem("idf"));
+    name = JSON.parse(localStorage.getItem("namef"));
+    image = JSON.parse(localStorage.getItem("imagef"));
+    type = JSON.parse(localStorage.getItem("typef"));
+    items = JSON.parse(localStorage.getItem("itemsf"));
+    velicina = id.length;
+  }
+  const pokemon = [];
+  for (let i = 0; i < velicina; i++) {
+    pokemon[i] = {
+      name: name[i],
+      id: id[i],
+      image: image[i],
+      type: type[i],
+      items: items[i],
+    };
+  }
+  // console.log(velicina);
+  // console.log(id);
   pokedexFavorite.html("");
-  const htmlCode = pokemon[velicina]
+  const htmlCode = pokemon
     .map(
       (poke) => `
 <li class ="card">
@@ -298,9 +344,11 @@ const DisplayFavouritePokemons = () => {
 
   pokedexFavorite.html(htmlCode);
 };
-DisplayFavouritePokemons();
+$("a").click(DisplayFavouritePokemons());
+
 //Add favourite pokemons
-let addToFav = (value) => {
+const addToFav = (value) => {
+  console.log(value);
   Promise.all(pokemons).then((result) => {
     const pokemon = result.map((res) => ({
       name: res.name,
@@ -309,24 +357,116 @@ let addToFav = (value) => {
       type: res.types.map((type) => type.type.name).join(", "),
       items: res.held_items.map((item) => item.item.name).join(", "),
     }));
-    favorites.push(pokemon[parseInt(value)]);
-    saveFavouritePokemons(favorites);
-    console.log("favorites");
+    const index = parseInt(value - 1);
+    saveFavouritePokemons(pokemon[index]);
     $(`.p${value}`).html(
-      '<i class="fas fa-check-square"></i> <a onClick="DisplayFavouritePokemons();" href="./favourites.html">Added to favourites</a>'
+      '<i class="fas fa-check-square"></i> <a onClick="DisplayFavouritePokemons()" href="./favourites.html">Added to favourites</a>'
     );
   });
-
-  console.log(favorites);
 };
+
+//save favourite pokemons
+
 function saveFavouritePokemons(pokemon) {
-  let pokemons;
-  if (localStorage.getItem("pokemons") === null) {
-    pokemons = [];
+  let id;
+  let name;
+  let image;
+  let type;
+  let items;
+  if (localStorage.getItem("idf") === null) {
+    id = [];
   } else {
-    pokemons = JSON.parse(localStorage.getItem("pokemons"));
+    id = JSON.parse(localStorage.getItem("idf"));
   }
-  console.log(typeof pokemons);
-  pokemons.push(pokemon);
-  localStorage.setItem("pokemons", JSON.stringify(pokemons));
+  //name
+  if (localStorage.getItem("namef") === null) {
+    name = [];
+  } else {
+    name = JSON.parse(localStorage.getItem("namef"));
+  }
+  //image
+  if (localStorage.getItem("imagef") === null) {
+    image = [];
+  } else {
+    image = JSON.parse(localStorage.getItem("imagef"));
+  }
+  //type
+  if (localStorage.getItem("typef") === null) {
+    type = [];
+  } else {
+    type = JSON.parse(localStorage.getItem("typef"));
+  }
+  //items
+  if (localStorage.getItem("itemsf") === null) {
+    items = [];
+  } else {
+    items = JSON.parse(localStorage.getItem("itemsf"));
+  }
+  id.push(pokemon.id);
+  localStorage.setItem("idf", JSON.stringify(id));
+  name.push(pokemon.name);
+  localStorage.setItem("namef", JSON.stringify(name));
+  image.push(pokemon.image);
+  localStorage.setItem("imagef", JSON.stringify(image));
+  type.push(pokemon.type);
+  localStorage.setItem("typef", JSON.stringify(type));
+  items.push(pokemon.items);
+  localStorage.setItem("itemsf", JSON.stringify(items));
+}
+
+function removeFromFav(value) {
+  let id;
+  let name;
+  let image;
+  let type;
+  let items;
+  if (localStorage.getItem("idf") === null) {
+    id = [];
+  } else {
+    id = JSON.parse(localStorage.getItem("idf"));
+  }
+  //name
+  if (localStorage.getItem("namef") === null) {
+    name = [];
+  } else {
+    name = JSON.parse(localStorage.getItem("namef"));
+  }
+  //image
+  if (localStorage.getItem("imagef") === null) {
+    image = [];
+  } else {
+    image = JSON.parse(localStorage.getItem("imagef"));
+  }
+  //type
+  if (localStorage.getItem("typef") === null) {
+    type = [];
+  } else {
+    type = JSON.parse(localStorage.getItem("typef"));
+  }
+  //items
+  if (localStorage.getItem("itemsf") === null) {
+    items = [];
+  } else {
+    items = JSON.parse(localStorage.getItem("itemsf"));
+  }
+  let index;
+  for (let i = 0; i < id.length; i++) {
+    if (id[i] == value) {
+      index = i;
+      break;
+    }
+  }
+  console.log("index");
+  console.log(index);
+  id.splice(index, 1);
+  localStorage.setItem("idf", JSON.stringify(id));
+  name.splice(index, 1);
+  localStorage.setItem("namef", JSON.stringify(name));
+  image.splice(index, 1);
+  localStorage.setItem("imagef", JSON.stringify(image));
+  type.splice(index, 1);
+  localStorage.setItem("typef", JSON.stringify(type));
+  items.splice(index, 1);
+  localStorage.setItem("itemsf", JSON.stringify(items));
+  DisplayFavouritePokemons();
 }
