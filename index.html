@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <!-- <link rel="stylesheet" href="/resources/demos/style.css" /> -->
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"
+      integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokemon</title>
+  </head>
+  <body>
+    <!--header-->
+    <header id="header">
+      <img src="./slike/Pokemon_logo.svg" alt="" />
+      <nav id="menu">
+        <div class="burger">
+          <div class="line line1"></div>
+          <div class="line line2"></div>
+          <div class="line line3"></div>
+        </div>
+        <ul class="nav-links">
+          <li class="li-poke">
+            <a href="#" class="poke">Pokémons</a>
+            <ul class="view-poke">
+              <li>
+                <a data-value="50" class="pokemons50" href="#pokedex"
+                  >View 50 Pokémons</a
+                >
+              </li>
+              <li>
+                <a data-value="100" class="pokemons100" href="#pokedex"
+                  >View 100 Pokémons</a
+                >
+              </li>
+              <li>
+                <a data-value="150" class="pokemons150" href="#pokedex"
+                  >View 150 Pokémons</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a
+              href="./favourites.html"
+              class="favourites"
+              onclick="DisplayFavouritePokemons();"
+              >Favourites</a
+            >
+          </li>
+          <li><a href="#" class="signup">Sign up</a></li>
+          <li><a href="#" class="signin">Sign in</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main role="main">
+      <!--home-->
+      <div id="home">
+        <img src="./slike/Pokemon_logo.svg" alt="" />
+        <div class="naslov">
+          <h4>Choose your</h4>
+          <h1>POKéMON</h1>
+        </div>
+      </div>
+      <!--Forms-->
+      <div class="popup">
+        <form class="register form" action="#">
+          <i class="fad fa-times-circle close-reg"></i>
+          <label>
+            Sign up
+          </label>
+          <div class="labels">
+            <input type="text" class="fname" value="" placeholder="Ime" />
+            <label class="label-fname" for="fname"></label>
+          </div>
+          <div class="labels">
+            <input type="text" class="lname" value="" placeholder="Prezime" />
+            <label class="label-lname" for="lname"></label>
+          </div>
+          <div class="labels">
+            <input
+              type="text"
+              id="dtmrodj"
+              value=""
+              autocomplete="off"
+              placeholder="Datum rođenja"
+            />
+            <label class="label-date" for="date"></label>
+          </div>
+          <div class="labels">
+            <input
+              class="email-reg"
+              type="text"
+              value=""
+              placeholder="E-mail"
+            />
+            <label class="label-email" for="email"></label>
+          </div>
+          <div class="labels">
+            <input
+              class="pass-reg"
+              type="password"
+              value=""
+              placeholder="Lozinka"
+            />
+            <label class="label-pass" for="password"></label>
+          </div>
+          <div class="labels">
+            <input
+              type="password"
+              class="cpass"
+              value=""
+              placeholder="Ponovi lozinku"
+            />
+            <label class="label-cpass" for="password"></label>
+          </div>
+          <a class="signin-link" href="#">Already registered?Sign in here!</a>
+          <button class="btn-reg" type="submit">Registruj se</button>
+        </form>
+        <!--SIGN IN FORM-->
+        <form class="login form" action="#">
+          <i class="fad fa-times-circle close-log"></i>
+          <label>
+            Sign in
+          </label>
+
+          <div class="labels">
+            <input class="email" type="text" placeholder="E-mail" />
+            <label for="email">
+              <div class="email-usr">
+                <i class="fas fa-user email-usr"></i>
+              </div>
+            </label>
+          </div>
+          <div class="labels">
+            <input class="pass" type="password" placeholder="Lozinka" />
+            <label for="password">
+              <div class="pass-key"><i class="fas fa-key pass-key"></i></div
+            ></label>
+          </div>
+          <a class="link-reg" href="#">Not registered yet?Register here now!</a>
+          <button class="btn-log" type="submit">Prijavi se</button>
+        </form>
+      </div>
+      <div class="main-content">
+        <div id="about">
+          <h2>Pokémons</h2>
+          <div class="about">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
+              quas dignissimos ducimus nulla? Recusandae, minus, provident fugit
+              laboriosam itaque voluptatum blanditiis aliquam impedit officiis
+              culpa neque iusto beatae ullam voluptatem nisi libero quod. Vel
+              minus totam odit deserunt cumque accusantium ex dignissimos,
+              soluta perspiciatis porro enim repudiandae obcaecati sint
+              temporibus harum explicabo. Expedita, ipsam? Molestias
+              voluptatibus beatae modi architecto qui rerum officia ullam a?
+              Iure ratione fugit quidem odio molestias velit officiis temporibus
+              dolorum maxime soluta eligendi porro deserunt autem sint, cumque
+              in, iusto quos natus odit. Eveniet nam porro quos. Beatae sit
+              deserunt nobis rerum doloribus animi illum quod.
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
+              quas dignissimos ducimus nulla? Recusandae, minus, provident fugit
+              laboriosam itaque voluptatum blanditiis aliquam impedit officiis
+              culpa neque iusto beatae ullam voluptatem nisi libero quod. Vel
+              minus totam odit deserunt cumque accusantium ex dignissimos,
+              soluta perspiciatis porro enim repudiandae obcaecati sint
+              temporibus harum explicabo. Expedita, ipsam? Molestias
+              voluptatibus beatae modi architecto qui rerum officia ullam a?
+              Iure ratione fugit quidem odio molestias velit officiis temporibus
+              dolorum maxime soluta eligendi porro deserunt autem sint, cumque
+              in, iusto quos natus odit. Eveniet nam porro quos. Beatae sit
+              deserunt nobis rerum doloribus animi illum quod.
+            </p>
+          </div>
+        </div>
+
+        <ol id="pokedex"></ol>
+      </div>
+    </main>
+
+    <script src="script.js" type="text/javascript"></script>
+  </body>
+</html>
