@@ -271,7 +271,7 @@ button:hover {
     /* top: 12vh; */
     display: flex;
     flex-direction: column;
-    width: 60%;
+    width: 100%;
     background-color: #3564ad;
     align-items: center;
     transition: transform 0.5s ease-in-out;
@@ -292,15 +292,23 @@ button:hover {
   .burger-anim .line3 {
     transform: rotate(45deg) translate(-5px, -6px);
   }
-  .nav-links li a {
-    width: 100%;
-    height: 100%;
-    line-height: 15vh;
+  .nav-links li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* line-height: 10vh; */
   }
-  #view-poke {
+  .view-poke {
     background-color: #2755a0;
+
+    /* height: 24vh; */
   }
-  #view-poke li:hover {
+  .viev-poke li {
+    width: 50vw;
+    height: 100%;
+    /* line-height: 15vh; */
+  }
+  .view-poke li:hover {
     background-color: #2d5ca8;
   }
   div.about,
