@@ -295,7 +295,8 @@ const DisplayFavouritePokemons = () => {
   let type;
   let items;
   let velicina;
-  if (localStorage.getItem("id") == null) {
+  const pokemon = [];
+  if (localStorage.getItem("idf") == null) {
     id = [];
     name = [];
     image = [];
@@ -309,17 +310,17 @@ const DisplayFavouritePokemons = () => {
     type = JSON.parse(localStorage.getItem("typef"));
     items = JSON.parse(localStorage.getItem("itemsf"));
     velicina = id.length;
+    for (let i = 0; i < velicina; i++) {
+      pokemon[i] = {
+        name: name[i],
+        id: id[i],
+        image: image[i],
+        type: type[i],
+        items: items[i],
+      };
+    }
   }
-  const pokemon = [];
-  for (let i = 0; i < velicina; i++) {
-    pokemon[i] = {
-      name: name[i],
-      id: id[i],
-      image: image[i],
-      type: type[i],
-      items: items[i],
-    };
-  }
+
   // console.log(velicina);
   // console.log(id);
   pokedexFavorite.html("");
